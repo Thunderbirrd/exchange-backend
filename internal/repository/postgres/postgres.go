@@ -8,9 +8,11 @@ import (
 )
 
 const (
-	usersTable     = "users"
-	requestsTable  = "requests"
-	exchangesTable = "exchanges"
+	usersTable      = "users"
+	requestsTable   = "requests"
+	exchangesTable  = "exchanges"
+	currenciesTable = "currencies"
+	airportsTable   = "airports"
 )
 
 func NewPostgresDB(cfg config.Config) (*sqlx.DB, error) {

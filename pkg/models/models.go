@@ -1,5 +1,7 @@
 package models
 
+import "time"
+
 type Status string
 
 const (
@@ -18,27 +20,26 @@ type User struct {
 }
 
 type Currency struct {
-	Code      string  `json:"code"`
-	RateToUsd float32 `json:"rate_to_usd"`
+	Code      string  `json:"code" db:"code"`
+	RateToUsd float32 `json:"rate_to_usd" db:"rate_to_usd"`
 }
 
 type Airport struct {
-	Code            string `json:"code"`
-	Country         string `json:"country"`
-	City            string `json:"city"`
-	MachineLocation string `json:"machine_location"`
+	Code            string `json:"code" db:"code"`
+	Country         string `json:"country" db:"country"`
+	City            string `json:"city" db:"city"`
+	MachineLocation string `json:"machine_location" db:"machine_location"`
 }
 
 type Request struct {
-	Id           int       `json:"id"`
-	AuthorId     int       `json:"author_id"`
-	FromCurrency *Currency `json:"from_currency"`
-	ToCurrency   *Currency `json:"to_currency"`
-	ValueFrom    float32   `json:"value_from"`
-	ValueTo      float32   `json:"value_to"`
-	DateTime     string    `json:"date_time"`
-	Airport      *Airport  `json:"airport"`
-	Status       Status    `json:"status"`
+	Id           int      `json:"id"`
+	AuthorId     int      `json:"author_id"`
+	FromCurrency Currency `json:"from_currency"`
+	ToCurrency   Currency `json:"to_currency"`
+	ValueFrom    float32  `json:"value_from"`
+	ValueTo      float32  `json:"value_to"`
+	DateTime     string   `json:"date_time"`
+	Airport      Airport  `json:"airport"`
 }
 
 type Exchange struct {
@@ -50,8 +51,17 @@ type Exchange struct {
 	AuthorApprove   bool     `json:"author_approve"`
 	AcceptorApprove bool     `json:"acceptor_approve"`
 	ExpiredTime     string   `json:"expired_time"`
+	Status          Status   `json:"status"`
 }
 
 type IdRequest struct {
 	Id int `json:"id"`
+}
+
+type GetRequestsData struct {
+	From     string    `json:"from" binding:"required"`
+	To       string    `json:"to" binding:"required"`
+	Airport  string    `json:"airport" binding:"required"`
+	Value    float32   `json:"value" binding:"required"`
+	DateTime time.Time `json:"date_time" binding:"required"`
 }

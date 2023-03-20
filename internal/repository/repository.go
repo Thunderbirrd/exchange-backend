@@ -5,6 +5,7 @@ import (
 	"github.com/Thunderbirrd/exchange-backend/internal/repository/postgres"
 	"github.com/Thunderbirrd/exchange-backend/pkg/models"
 	"github.com/jmoiron/sqlx"
+	"time"
 )
 
 type Authorization interface {
@@ -14,6 +15,11 @@ type Authorization interface {
 
 type Api interface {
 	CreateRequest(request dbo.Request) (int, error)
+	GetRequests(from, to, airport string, valMin, valMax float32, dateTime time.Time) ([]dbo.Request, error)
+	GetAllCurrencies() ([]models.Currency, error)
+	GetCurrencyByCode(code string) (models.Currency, error)
+	GetAllAirports() ([]models.Airport, error)
+	GetAirportByCode(code string) (models.Airport, error)
 }
 
 type Repository struct {

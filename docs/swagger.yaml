@@ -10,6 +10,62 @@ definitions:
     - login
     - password
     type: object
+  models.Airport:
+    properties:
+      city:
+        type: string
+      code:
+        type: string
+      country:
+        type: string
+      machine_location:
+        type: string
+    type: object
+  models.Currency:
+    properties:
+      code:
+        type: string
+      rate_to_usd:
+        type: number
+    type: object
+  models.GetRequestsData:
+    properties:
+      airport:
+        type: string
+      date_time:
+        type: string
+      from:
+        type: string
+      to:
+        type: string
+      value:
+        type: number
+    required:
+    - airport
+    - date_time
+    - from
+    - to
+    - value
+    type: object
+  models.Request:
+    properties:
+      airport:
+        $ref: '#/definitions/models.Airport'
+      author_id:
+        type: integer
+      date_time:
+        type: string
+      from_currency:
+        $ref: '#/definitions/models.Currency'
+      id:
+        type: integer
+      to_currency:
+        $ref: '#/definitions/models.Currency'
+      value_from:
+        type: number
+      value_to:
+        type: number
+    type: object
   models.User:
     properties:
       login:
@@ -26,7 +82,6 @@ definitions:
     - login
     - name
     - password
-    - rating
     - surname
     type: object
   models.errorResponse:
@@ -41,6 +96,156 @@ info:
   title: Exchange app
   version: "1.0"
 paths:
+  /api/airports:
+    get:
+      consumes:
+      - application/json
+      description: get airports
+      operationId: get-airports
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: GetAirports
+      tags:
+      - api
+  /api/currencies:
+    get:
+      consumes:
+      - application/json
+      description: get currencies
+      operationId: get-currencies
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: GetCurrencies
+      tags:
+      - api
+  /api/requests:
+    post:
+      consumes:
+      - application/json
+      description: create new request for exchange
+      operationId: create-request
+      parameters:
+      - description: request info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Request'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: CreateRequest
+      tags:
+      - api
+  /api/requests/get-all:
+    post:
+      consumes:
+      - application/json
+      description: get all request by specified params
+      operationId: get-requests
+      parameters:
+      - description: request info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.GetRequestsData'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: GetRequests
+      tags:
+      - api
   /auth/sign-in:
     post:
       consumes:

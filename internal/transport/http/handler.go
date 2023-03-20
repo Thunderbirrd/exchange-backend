@@ -31,7 +31,18 @@ func (h *Handler) InitRoutes() *gin.Engine {
 	{
 		requests := api.Group("/requests")
 		{
-			requests.POST("/")
+			requests.POST("/", h.createRequest)
+			requests.POST("/get-all", h.getRequests)
+		}
+
+		currencies := api.Group("/currencies")
+		{
+			currencies.GET("/", h.getAllCurrencies)
+		}
+
+		airports := api.Group("/airports")
+		{
+			airports.GET("/", h.getAllAirports)
 		}
 	}
 

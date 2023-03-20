@@ -1,27 +1,16 @@
 package dbo
 
-type Currency struct {
-	Code      string  `db:"code"`
-	RateToUsd float32 `db:"rate_to_usd"`
-}
-
-type Airport struct {
-	Code            string `db:"code"`
-	Country         string `db:"country"`
-	City            string `db:"city"`
-	MachineLocation string `db:"machine_location"`
-}
+import "time"
 
 type Request struct {
-	Id           int     `db:"id"`
-	AuthorId     int     `db:"author_id"`
-	FromCurrency string  `db:"from_currency"`
-	ToCurrency   string  `db:"to_currency"`
-	ValueFrom    float32 `db:"value_from"`
-	ValueTo      float32 `db:"value_to"`
-	DateTime     string  `db:"date_time"`
-	Airport      string  `db:"airport"`
-	Status       string  `db:"status"`
+	Id           int       `db:"id"`
+	AuthorId     int       `db:"author_id"`
+	FromCurrency string    `db:"from_currency"`
+	ToCurrency   string    `db:"to_currency"`
+	ValueFrom    float32   `db:"value_from"`
+	ValueTo      float32   `db:"value_to"`
+	DateTime     time.Time `db:"date_time"`
+	Airport      string    `db:"airport"`
 }
 
 type Exchange struct {
@@ -33,6 +22,7 @@ type Exchange struct {
 	AuthorApprove   bool   `db:"author_approve"`
 	AcceptorApprove bool   `db:"acceptor_approve"`
 	ExpiredTime     string `db:"expired_time"`
+	Status          string `db:"status"`
 }
 
 type IdRequest struct {

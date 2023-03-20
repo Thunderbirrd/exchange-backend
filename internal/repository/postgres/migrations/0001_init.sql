@@ -1,7 +1,7 @@
 -- +migrate Up
 CREATE TABLE users
 (
-    id            serial       not null unique,
+    id            serial PRIMARY KEY,
     name          varchar(255) not null,
     surname       varchar(255) not null,
     login         varchar(255) not null unique,

@@ -8,6 +8,7 @@ const (
 	Created    Status = "created"
 	InProgress Status = "in_progress"
 	Finished   Status = "finished"
+	Declined   Status = "declined"
 )
 
 type User struct {
@@ -43,15 +44,16 @@ type Request struct {
 }
 
 type Exchange struct {
-	Id              int      `json:"id"`
-	Request         *Request `json:"request"`
-	AcceptorId      int      `json:"acceptor_id"`
-	AuthorCode      string   `json:"author_code"`
-	AcceptorCode    string   `json:"acceptor_code"`
-	AuthorApprove   bool     `json:"author_approve"`
-	AcceptorApprove bool     `json:"acceptor_approve"`
-	ExpiredTime     string   `json:"expired_time"`
-	Status          Status   `json:"status"`
+	Id              int     `json:"id"`
+	Request         Request `json:"request"`
+	AuthorId        int     `json:"author_id"`
+	AcceptorId      int     `json:"acceptor_id"`
+	AuthorCode      string  `json:"author_code"`
+	AcceptorCode    string  `json:"acceptor_code"`
+	AuthorApprove   bool    `json:"author_approve"`
+	AcceptorApprove bool    `json:"acceptor_approve"`
+	ExpiredTime     string  `json:"expired_time"`
+	Status          Status  `json:"status"`
 }
 
 type IdRequest struct {

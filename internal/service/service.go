@@ -16,6 +16,11 @@ type Api interface {
 	GetRequests(data models.GetRequestsData) ([]models.Request, error)
 	GetAllCurrencies() ([]models.Currency, error)
 	GetAllAirports() ([]models.Airport, error)
+	CreateExchange(exchange models.Exchange) (int, error)
+	AcceptExchange(id int) error
+	DeclineExchange(id int) error
+	GetExchangeById(id int) (models.Exchange, error)
+	GetUsersExchanges(userId int) ([]models.Exchange, error)
 }
 
 type Service struct {

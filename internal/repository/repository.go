@@ -20,6 +20,11 @@ type Api interface {
 	GetCurrencyByCode(code string) (models.Currency, error)
 	GetAllAirports() ([]models.Airport, error)
 	GetAirportByCode(code string) (models.Airport, error)
+	GetRequestById(id int) (dbo.Request, error)
+	CreateExchange(exchange dbo.Exchange) (int, error)
+	UpdateExchange(id int, input dbo.UpdateExchangeInput) error
+	GetExchangeById(id int) (dbo.Exchange, error)
+	GetUsersExchanges(userId int) ([]dbo.Exchange, error)
 }
 
 type Repository struct {

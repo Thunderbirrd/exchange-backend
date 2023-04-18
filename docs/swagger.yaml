@@ -28,6 +28,29 @@ definitions:
       rate_to_usd:
         type: number
     type: object
+  models.Exchange:
+    properties:
+      acceptor_approve:
+        type: boolean
+      acceptor_code:
+        type: string
+      acceptor_id:
+        type: integer
+      author_approve:
+        type: boolean
+      author_code:
+        type: string
+      author_id:
+        type: integer
+      expired_time:
+        type: string
+      id:
+        type: integer
+      request:
+        $ref: '#/definitions/models.Request'
+      status:
+        type: string
+    type: object
   models.GetRequestsData:
     properties:
       airport:
@@ -46,6 +69,11 @@ definitions:
     - from
     - to
     - value
+    type: object
+  models.IdRequest:
+    properties:
+      id:
+        type: integer
     type: object
   models.Request:
     properties:
@@ -162,6 +190,203 @@ paths:
       security:
       - ApiKeyAuth: []
       summary: GetCurrencies
+      tags:
+      - api
+  /api/exchanges:
+    get:
+      consumes:
+      - application/json
+      description: get user's exchanges
+      operationId: get-users-exchange
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: GetUsersExchanges
+      tags:
+      - api
+    post:
+      consumes:
+      - application/json
+      description: create exchange
+      operationId: create-exchange
+      parameters:
+      - description: exchange info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.Exchange'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: CreateExchange
+      tags:
+      - api
+  /api/exchanges/accept:
+    post:
+      consumes:
+      - application/json
+      description: accept exchange
+      operationId: accept-exchange
+      parameters:
+      - description: exchange id
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.IdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: AcceptExchange
+      tags:
+      - api
+  /api/exchanges/by-id:
+    post:
+      consumes:
+      - application/json
+      description: get exchange by id
+      operationId: get-exchange
+      parameters:
+      - description: exchange id
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.IdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: GetExchange
+      tags:
+      - api
+  /api/exchanges/decline:
+    post:
+      consumes:
+      - application/json
+      description: decline exchange
+      operationId: decline-exchange
+      parameters:
+      - description: exchange id
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.IdRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/models.errorResponse'
+      security:
+      - ApiKeyAuth: []
+      summary: DeclineExchange
       tags:
       - api
   /api/requests:

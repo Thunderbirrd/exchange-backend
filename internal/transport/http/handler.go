@@ -35,6 +35,15 @@ func (h *Handler) InitRoutes() *gin.Engine {
 			requests.POST("/get-all", h.getRequests)
 		}
 
+		exchanges := api.Group("/exchanges")
+		{
+			exchanges.POST("/", h.createExchange)
+			exchanges.POST("/accept", h.acceptExchange)
+			exchanges.POST("/decline", h.declineExchange)
+			exchanges.POST("/by-id", h.getExchange)
+			exchanges.GET("/", h.getUsersExchanges)
+		}
+
 		currencies := api.Group("/currencies")
 		{
 			currencies.GET("/", h.getAllCurrencies)

@@ -33,3 +33,30 @@ func RequestToApi(request Request) models.Request {
 		DateTime:  request.DateTime.Format(time.RFC3339),
 	}
 }
+
+func ExchangeToDbo(exchange models.Exchange) Exchange {
+	return Exchange{
+		Id:              exchange.Id,
+		Request:         exchange.Request.Id,
+		AuthorId:        exchange.AuthorId,
+		AcceptorId:      exchange.AcceptorId,
+		AcceptorCode:    exchange.AcceptorCode,
+		AuthorCode:      exchange.AuthorCode,
+		AuthorApprove:   exchange.AuthorApprove,
+		AcceptorApprove: exchange.AcceptorApprove,
+	}
+}
+
+func ExchangeToApi(exchange Exchange) models.Exchange {
+	return models.Exchange{
+		Id:              exchange.Id,
+		AuthorId:        exchange.AuthorId,
+		AcceptorId:      exchange.AcceptorId,
+		AcceptorCode:    exchange.AcceptorCode,
+		AuthorCode:      exchange.AuthorCode,
+		AuthorApprove:   exchange.AuthorApprove,
+		AcceptorApprove: exchange.AcceptorApprove,
+		Status:          models.Status(exchange.Status),
+		ExpiredTime:     exchange.ExpiredTime.Format(time.RFC3339),
+	}
+}
